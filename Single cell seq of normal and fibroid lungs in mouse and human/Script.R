@@ -9,9 +9,9 @@ library(patchwork)
 
 #read barcodes, features(genes) and matrix files
 
-NML_1 <- Read10X(data.dir = "~/Desktop/Project_seurat_lungs/GSE132771_RAW/NML1/")
-NML_2 <- Read10X(data.dir = "~/Desktop/Project_seurat_lungs/GSE132771_RAW/NML2/")
-NML_3 <- Read10X(data.dir = "~/Desktop/Project_seurat_lungs/GSE132771_RAW/NML3/")
+NML_1 <- Read10X(data.dir = "PATH/to/NML1/")
+NML_2 <- Read10X(data.dir = "PATH/to/NML2/")
+NML_3 <- Read10X(data.dir = "PATH/to/NML3/")
 
 
 #create seurat objects
@@ -23,9 +23,9 @@ NML_3 <- CreateSeuratObject(counts = NML_3, project = "NML_3", min.cells = 3, mi
 
 ##saving seurat object##
 
-saveRDS(NML_1, file = "~/Desktop/Project_seurat_lungs/NML_1.RDS")
-saveRDS(NML_2, file = "~/Desktop/Project_seurat_lungs/NML_2.RDS")
-saveRDS(NML_3, file = "~/Desktop/Project_seurat_lungs/NML_3.RDS")
+saveRDS(NML_1, file = "PATH/TO/NML_1.RDS")
+saveRDS(NML_2, file = "PATH/TO/NML_2.RDS")
+saveRDS(NML_3, file = "PATH/TO/NML_3.RDS")
 
 
 ###merging all three seurat object#####
@@ -36,7 +36,7 @@ merged_NML <- merge(NML_1, y= c(NML_2, NML_3),
 
 #View(merged_NML@meta.data)
 #saving the merged seurat object
-saveRDS(merged_NML, file = "~/Desktop/Project_seurat_lungs/Merged_NML.RDS")
+saveRDS(merged_NML, file = "PATH/TO/Merged_NML.RDS")
 
 ####standard preprocessing workflow########
 
@@ -44,7 +44,7 @@ saveRDS(merged_NML, file = "~/Desktop/Project_seurat_lungs/Merged_NML.RDS")
 merged_NML <- PercentageFeatureSet(merged_NML, pattern = "^MT-", 
                                    col.name = "percent.mt")
 #saving the merged seurat object with percent
-saveRDS(merged_NML, file = "~/Desktop/Project_seurat_lungs/Merged_NML_per.RDS")
+saveRDS(merged_NML, file = "PATH/TO/Merged_NML_per.RDS")
 
 
 ####selecting cells for further analysis######
@@ -64,7 +64,7 @@ VlnPlot(merged_NML_subset, features = c("nCount_RNA", "nFeature_RNA", "percent.m
         ncol=3)
 
 #save seurat object
-saveRDS(merged_NML_subset, file = "~/Desktop/Project_seurat_lungs/merged_NMLs_subset.RDS")
+saveRDS(merged_NML_subset, file = "PATH/TO/merged_NMLs_subset.RDS")
 
 ######DAtA normalization,feature selection and data scaling######
 #data normalization
@@ -92,7 +92,7 @@ merged_NML_normalized_all <- ScaleData(merged_NML_normalized, features = all.gen
 head(merged_NML_normalized@assays[["RNA"]]@layers[["scale.data"]])
 
 #saving normalized data
-saveRDS(merged_NML_normalized, file = "~/Desktop/Project_seurat_lungs/merged_NML_norm.RDS")
+saveRDS(merged_NML_normalized, file = "PATH/TO/merged_NML_norm.RDS")
 
 
 ###Performing PCA on the scaled data(linear dimensionality reduction)#######
